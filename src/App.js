@@ -15,6 +15,7 @@ function App(props) {
               beer_name = {beer.beer_name}
               quantity = {beer.quantity}
               description = {beer.description}
+              rating = {beer.rating}
             />
           ))}
         </div>

@@ -6,6 +6,7 @@ function Beer(props) {
         <div className="beer-container">
             <h2 className="beer-name">{props.beer_name}</h2>
             <p>Quantity: <span className="beer-quantity">{props.quantity}</span></p>
+            <p>Untappd Rating: <span className="beer-rating">{props.rating}</span></p>
             <p className="beer-description">{props.description}</p>
         </div>
     )
