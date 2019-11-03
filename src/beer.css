@@ -1,0 +1,7 @@
+.beer-container {
+    max-width: 400px;
+    border: 1px black solid;
+    border-radius: 10px;
+    margin-bottom: 50px;
+    text-align: center;
+}

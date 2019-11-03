@@ -1,25 +1,26 @@
 import React from 'react';
-import logo from './logo.svg';
+import Beer from './beer';
 import './App.css';
 
-function App() {
+function App(props) {
+  console.log(props);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main className='App'>
+      <section className="results-section">
+        <h2>My Beers:</h2>
+        <div className="results" id="results">
+          {props.store.map(beer => (
+            <Beer 
+              key = {beer.id}
+              beer_name = {beer.beer_name}
+              quantity = {beer.quantity}
+              description = {beer.description}
+            />
+          ))}
+        </div>
+      </section>
+        {/* content goes here */}
+    </main>
   );
 }
 
