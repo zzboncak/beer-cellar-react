@@ -23,7 +23,8 @@ let STORE = [
     {
         id: "4",
         beer_name: "Pliney the Elder",
-        quantity: 4.52,
+        quantity: 4,
+        rating: 4.52,
         description: "A very good IPA.",
     },
 ];

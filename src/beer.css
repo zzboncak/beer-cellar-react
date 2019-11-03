@@ -5,3 +5,14 @@
     margin-bottom: 50px;
     text-align: center;
 }
+
+.beer-description {
+    text-align: left;
+    padding-left: 10px;
+}
+
+.info-flex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;;
+}
