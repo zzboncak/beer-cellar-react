@@ -4,7 +4,7 @@ class Form extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: "",
+            id: 0,
             beer_name: '',
             quantity: 0,
             rating: 0,
@@ -18,17 +18,18 @@ class Form extends React.Component {
     }
     
     handleChange(key, value) {
-        let currentState = this.state;
-        currentState[key] = value;
-        this.setState(currentState);
+      let currentState = this.state;
+      currentState[key] = value;
+      currentState["id"] = Math.random()*1000;
+      this.setState(currentState);
     }
     
     handleBeerChange(event) {
-        this.handleChange("beer_name", event.target.value);
+      this.handleChange("beer_name", event.target.value);
     }
 
     handleQuantityChange(event) {
-        this.handleChange("quantity", event.target.value);
+      this.handleChange("quantity", event.target.value);
     }
     
     handleSubmit(event) {
