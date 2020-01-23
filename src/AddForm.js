@@ -1,6 +1,7 @@
 import React from 'react';
+import { REACT_APP_CLIENT_ID, REACT_APP_CLIENT_SECRET } from './config';
 
-class Form extends React.Component {
+class AddForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -31,20 +32,36 @@ class Form extends React.Component {
     handleQuantityChange(event) {
       this.handleChange("quantity", event.target.value);
     }
-    
-    handleSubmit(event) {
-        console.log(this.state);
-        event.preventDefault();
-        console.log(this.props.store);
-        this.props.store.push(this.state);
-        this.props.modifyState();
+
+    searchBeer(beerName) {
+      let beerSearchTerm = beerName.replace(/ /g, '+');
+      return `https://api.untappd.com/v4/search/beer?client_id=${REACT_APP_CLIENT_ID}&client_secret=${REACT_APP_CLIENT_SECRET}&q=${beerSearchTerm}&oauth_consumer_key=${REACT_APP_CLIENT_ID}&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1579811282&oauth_nonce=NGTvfx803sS&oauth_version=1.0&oauth_signature=p6Fjfb3a/2Jn8pOPuWI25umZOHw='`
     }
+
+    handleSubmit(event) {
+      event.preventDefault();
+      fetch(this.searchBeer(this.state.beer_name))
+        .then(res => {
+          if(!res.ok) {
+            throw new Error('Failed to add new beer')
+          }
+          return res.json()
+        })
+        .then(data => {
+          console.log('all data', data);
+          console.log('beers', data.response.beers.items);
+          //data.response.beers.items.forEach(instance => console.log(instance.beer.beer_name))
+          this.props.updateSearchedBeers(data.response.beers.items);
+        });
+    }
+
+
     
     render() {
         return (
           <form onSubmit={this.handleSubmit}>
             <label>
-              Beer:
+              Beer search:
               <input type="text" value={this.state.beer_name} onChange={this.handleBeerChange} />
             </label>
             <label>
@@ -57,4 +74,4 @@ class Form extends React.Component {
     }
 }
 
-export default Form;
+export default AddForm;
