@@ -46,6 +46,7 @@ class App extends React.Component {
       return this.state.searchedBeers.map((instance, i) => {
         return <div key={i}>
                 <h2>Untappd Beer Name: {instance.beer.beer_name}</h2>
+                <img src={instance.beer.beer_label} />
                 <p>Untappd Beer Id: {instance.beer.bid}</p>
                 <p>Untappd Brewery Id: {instance.brewery.brewery_id}</p>
                 <p>Untappd Description: {instance.beer.beer_description}</p>
