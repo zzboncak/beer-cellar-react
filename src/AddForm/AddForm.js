@@ -1,5 +1,6 @@
 import React from 'react';
-import { REACT_APP_CLIENT_ID, REACT_APP_CLIENT_SECRET } from './config';
+import { REACT_APP_CLIENT_ID, REACT_APP_CLIENT_SECRET } from '../config';
+import './AddForm.css';
 
 class AddForm extends React.Component {
     constructor(props) {
@@ -59,17 +60,20 @@ class AddForm extends React.Component {
     
     render() {
         return (
-          <form onSubmit={this.handleSubmit}>
-            <label>
-              Beer search:
-              <input type="text" value={this.state.beer_name} onChange={this.handleBeerChange} />
-            </label>
-            <label>
-              Quantity:
-              <input type="number" value={this.state.quantity} onChange={this.handleQuantityChange} />
-            </label>
-            <input type="submit" value="Submit" />
-          </form>
+          <main className='search-form-container'>
+            <form onSubmit={this.handleSubmit} className='search-form'>
+              <label>
+                Beer search:
+                <input type="text" value={this.state.beer_name} onChange={this.handleBeerChange} />
+              </label>
+              <label>
+                Quantity:
+                <input type="number" value={this.state.quantity} onChange={this.handleQuantityChange} />
+              </label>
+              <input type="submit" value="Submit" />
+              <button type='button' onClick={this.props.toggleAddFormView}>Go back</button>
+            </form>
+          </main>
         );
     }
 }

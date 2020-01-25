@@ -1,7 +1,7 @@
 import React from 'react';
-import Beer from './beer';
+import Beer from './Beer/beer';
 import './App.css';
-import AddForm from './AddForm';
+import AddForm from './AddForm/AddForm';
 
 
 class App extends React.Component {
@@ -10,15 +10,16 @@ class App extends React.Component {
     this.state = {
         value: 0,
         beers: [],
-        searchedBeers: []
+        searchedBeers: [],
+        isAddFormVisible: false,
     };
-    // this.modifyState = this.modifyState.bind(this);
   }
 
-  modifyState = () => {
+  toggleAddFormView = () => {
+    let newState = !this.state.isAddFormVisible;
     this.setState({
-      value: this.state.value + 1,
-    })
+      isAddFormVisible: newState
+    });
   }
 
   updateSearchedBeers = (resultsArray) => {
@@ -54,14 +55,20 @@ class App extends React.Component {
       })
     }
   }
-  
-  render () {
-    const searchSection = this.renderSearchResults();
-    
-    return (
-      <main className='App'>
-        <AddForm store={this.props.store} updateSearchedBeers={this.updateSearchedBeers}/>
+
+  renderPage = () => {
+    if(this.state.isAddFormVisible) {
+      return (
+        <AddForm 
+          store={this.props.store} 
+          updateSearchedBeers={this.updateSearchedBeers}
+          toggleAddFormView={this.toggleAddFormView}
+        />
+      )
+    } else {
+      return (
         <section className="results-section">
+          <button onClick={this.toggleAddFormView}>Search for a beer</button>
           <h2>My Beers:</h2>
           <div className="results" id="results">
             {this.state.beers.map(beer => (
@@ -74,11 +81,21 @@ class App extends React.Component {
               />
             ))}
           </div>
-          <div className="search-results">
-            {searchSection}
-          </div>
         </section>
-          {/* content goes here */}
+      )
+    }
+  }
+  
+  render () {
+    const searchSection = this.renderSearchResults();
+    const page = this.renderPage();
+    
+    return (
+      <main className='App'>
+        {page}
+        <footer>
+          <img src='Images/pbu_80_black.png' />
+        </footer>
       </main>
     );
   }
