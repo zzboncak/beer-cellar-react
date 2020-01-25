@@ -1,7 +1,11 @@
 import React from 'react';
 import Beer from './Beer/beer';
+import { Route, Link } from 'react-router-dom';
 import './App.css';
 import AddForm from './AddForm/AddForm';
+import BeerList from './BeerList/BeerList';
+import BeerContext from './BeerContext';
+import NavButtons from './NavButtons/NavButtons';
 
 
 class App extends React.Component {
@@ -56,47 +60,25 @@ class App extends React.Component {
     }
   }
 
-  renderPage = () => {
-    if(this.state.isAddFormVisible) {
-      return (
-        <AddForm 
-          store={this.props.store} 
-          updateSearchedBeers={this.updateSearchedBeers}
-          toggleAddFormView={this.toggleAddFormView}
-        />
-      )
-    } else {
-      return (
-        <section className="results-section">
-          <button onClick={this.toggleAddFormView}>Search for a beer</button>
-          <h2>My Beers:</h2>
-          <div className="results" id="results">
-            {this.state.beers.map(beer => (
-              <Beer 
-                key = {beer.id}
-                beer_name = {beer.beer_name}
-                quantity = {beer.quantity}
-                description = {beer.beer_description}
-                rating = {beer.untappd_rating}
-              />
-            ))}
-          </div>
-        </section>
-      )
-    }
-  }
   
   render () {
     const searchSection = this.renderSearchResults();
-    const page = this.renderPage();
+    const contextValue = {
+      beers: this.state.beers,
+    };
     
     return (
-      <main className='App'>
-        {page}
-        <footer>
-          <img src='Images/pbu_80_black.png' />
-        </footer>
-      </main>
+      <BeerContext.Provider value={contextValue}>
+        <main className='App'>
+          <h1 className='hero-header'>Cheers 🍺</h1>
+          <Route path='/add-form' component={AddForm} />
+          <Route path='/beer-list' component={BeerList} />
+          <Route exact path='/' component={NavButtons} />
+          <footer>
+            <img src={'./src/Images/pbu_80_black.png'} />
+          </footer>
+        </main>
+      </BeerContext.Provider>
     );
   }
 }

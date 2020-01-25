@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { REACT_APP_CLIENT_ID, REACT_APP_CLIENT_SECRET } from '../config';
 import './AddForm.css';
 
@@ -10,36 +11,23 @@ class AddForm extends React.Component {
             beer_name: '',
             quantity: 0,
             rating: 0,
-            description: ""
+            description: "",
+            searchedBeers: [],
         };
-    
-        this.handleChange = this.handleChange.bind(this);
-        this.handleBeerChange = this.handleBeerChange.bind(this);
-        this.handleQuantityChange = this.handleQuantityChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
     
-    handleChange(key, value) {
-      let currentState = this.state;
-      currentState[key] = value;
-      currentState["id"] = Math.random()*1000;
-      this.setState(currentState);
-    }
-    
-    handleBeerChange(event) {
-      this.handleChange("beer_name", event.target.value);
+    handleBeerChange = (event) => {
+      this.setState({
+        beer_name: event.target.value
+      })
     }
 
-    handleQuantityChange(event) {
-      this.handleChange("quantity", event.target.value);
-    }
-
-    searchBeer(beerName) {
+    searchBeer = (beerName) => {
       let beerSearchTerm = beerName.replace(/ /g, '+');
       return `https://api.untappd.com/v4/search/beer?client_id=${REACT_APP_CLIENT_ID}&client_secret=${REACT_APP_CLIENT_SECRET}&q=${beerSearchTerm}&oauth_consumer_key=${REACT_APP_CLIENT_ID}&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1579811282&oauth_nonce=NGTvfx803sS&oauth_version=1.0&oauth_signature=p6Fjfb3a/2Jn8pOPuWI25umZOHw='`
     }
 
-    handleSubmit(event) {
+    handleSubmit = (event) => {
       event.preventDefault();
       fetch(this.searchBeer(this.state.beer_name))
         .then(res => {
@@ -51,28 +39,50 @@ class AddForm extends React.Component {
         .then(data => {
           console.log('all data', data);
           console.log('beers', data.response.beers.items);
-          //data.response.beers.items.forEach(instance => console.log(instance.beer.beer_name))
-          this.props.updateSearchedBeers(data.response.beers.items);
+          this.setState({
+            searchedBeers: data.response.beers.items,
+          });
         });
     }
 
+    updateSearchedBeers = (resultsArray) => {
+      this.setState({
+        searchedBeers: resultsArray,
+      });
+    }
 
+    renderSearchResults = () => {
+      if(this.state.searchedBeers === []) {
+        return <div>Nothing to see here...</div>
+      } else {
+        return this.state.searchedBeers.map((instance, i) => {
+          return <div key={i}>
+                  <h2>Untappd Beer Name: {instance.beer.beer_name}</h2>
+                  <img src={instance.beer.beer_label} />
+                  <p>Untappd Beer Id: {instance.beer.bid}</p>
+                  <p>Untappd Brewery Id: {instance.brewery.brewery_id}</p>
+                  <p>Untappd Description: {instance.beer.beer_description}</p>
+                </div>
+        })
+      }
+    }
     
     render() {
+        const beerResults = this.renderSearchResults();
+
         return (
           <main className='search-form-container'>
             <form onSubmit={this.handleSubmit} className='search-form'>
-              <label>
+              <label htmlFor="search-term">
                 Beer search:
-                <input type="text" value={this.state.beer_name} onChange={this.handleBeerChange} />
+                <input name="search-term" type="text" value={this.state.beer_name} onChange={this.handleBeerChange} />
               </label>
-              <label>
-                Quantity:
-                <input type="number" value={this.state.quantity} onChange={this.handleQuantityChange} />
-              </label>
-              <input type="submit" value="Submit" />
-              <button type='button' onClick={this.props.toggleAddFormView}>Go back</button>
+              <br />
+              <button type="submit" value="Submit">Submit</button>
+              {' '}
+              <Link to='/'><button>Go back</button></Link>
             </form>
+            <section className="results-section">{beerResults}</section>
           </main>
         );
     }

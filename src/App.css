@@ -1,3 +1,16 @@
+* {
+    box-sizing: border-box;
+    background-color: rgb(240, 234, 155);
+}
+
 #beer-search, #beer-button {
     margin-left: 15px;
+}
+
+.hero-header {
+    min-width: 200px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
 }
