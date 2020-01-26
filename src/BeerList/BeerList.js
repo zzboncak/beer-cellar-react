@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import BeerContext from '../BeerContext';
 import Beer from '../Beer/beer';
+import './BeerList.css';
 
 class BeerList extends React.Component {
     static contextType = BeerContext;
@@ -19,13 +20,12 @@ class BeerList extends React.Component {
     }
 
     render() {
-        console.log(this.context.beers);
         const beers = this.renderBeers();
         return (
-            <div>
+            <div className="beer-list">
                 {beers}
                 <Link to='/'>
-                    <button>Go back!</button>
+                    <button className="back-button">Go back!</button>
                 </Link>
             </div>
         );

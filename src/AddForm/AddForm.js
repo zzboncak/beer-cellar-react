@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { REACT_APP_CLIENT_ID, REACT_APP_CLIENT_SECRET } from '../config';
 import './AddForm.css';
+import BeerResult from '../BeerResult/BeerResult';
 
 class AddForm extends React.Component {
     constructor(props) {
@@ -56,13 +57,15 @@ class AddForm extends React.Component {
         return <div>Nothing to see here...</div>
       } else {
         return this.state.searchedBeers.map((instance, i) => {
-          return <div key={i}>
-                  <h2>Untappd Beer Name: {instance.beer.beer_name}</h2>
-                  <img src={instance.beer.beer_label} />
-                  <p>Untappd Beer Id: {instance.beer.bid}</p>
-                  <p>Untappd Brewery Id: {instance.brewery.brewery_id}</p>
-                  <p>Untappd Description: {instance.beer.beer_description}</p>
-                </div>
+          return <BeerResult
+                    key={i}          
+                    beer_name={instance.beer.beer_name}
+                    beer_label={instance.beer.beer_label}
+                    bid={instance.beer.bid}
+                    brewery_id={instance.brewery.brewery_id}
+                    beer_description={instance.beer.beer_description}
+                    history={this.props.history}
+                  />
         })
       }
     }
@@ -71,19 +74,28 @@ class AddForm extends React.Component {
         const beerResults = this.renderSearchResults();
 
         return (
-          <main className='search-form-container'>
+          <section className='search-form-container'>
             <form onSubmit={this.handleSubmit} className='search-form'>
-              <label htmlFor="search-term">
-                Beer search:
-                <input name="search-term" type="text" value={this.state.beer_name} onChange={this.handleBeerChange} />
-              </label>
-              <br />
-              <button type="submit" value="Submit">Submit</button>
-              {' '}
-              <Link to='/'><button>Go back</button></Link>
+              <fieldset className='search-form-fieldset'>
+                <label htmlFor="search-term" className="search-term">
+                  Beer search: {' '}
+                  <input 
+                    name="search-term" 
+                    type="text" 
+                    value={this.state.beer_name} 
+                    onChange={this.handleBeerChange} 
+                    placeholder='Bourbon County 2018'
+                  />
+                </label>
+                <br />
+                <button type="submit" value="Submit" id="submit-button">Submit</button>
+                <br />
+                {' '}
+                <Link to='/'><button id="back-button">Go back</button></Link>
+              </fieldset>
             </form>
             <section className="results-section">{beerResults}</section>
-          </main>
+          </section>
         );
     }
 }

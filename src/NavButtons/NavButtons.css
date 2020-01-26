@@ -1,7 +1,9 @@
 button {
     font-size: 20px;
     width: 200px;
-    border-radius: 10px;
+    background-color: whitesmoke;
+    height: 50px;
+    border-radius: 20px;
 }
 
 button:hover {

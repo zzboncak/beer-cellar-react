@@ -1,6 +1,7 @@
 * {
     box-sizing: border-box;
-    background-color: rgb(240, 234, 155);
+    background-color: rgb(255, 203, 59);
+    font-family: sans-serif;
 }
 
 #beer-search, #beer-button {
@@ -8,7 +9,7 @@
 }
 
 .hero-header {
-    min-width: 200px;
+    width: 360px;
     text-align: center;
     margin-left: auto;
     margin-right: auto;
