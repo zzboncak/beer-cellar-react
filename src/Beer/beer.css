@@ -6,6 +6,11 @@
     text-align: center;
     margin-left: auto;
     margin-right: auto;
+    background-color: wheat;
+}
+
+.beer-container > * {
+    background-color: wheat;
 }
 
 .beer-description {
@@ -17,4 +22,11 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;;
+}
+
+#remove-button {
+    height: 50px;
+    border-radius: 20px;
+    background-color: white;
+    margin-bottom: 30px;
 }

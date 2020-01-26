@@ -11,6 +11,7 @@ class BeerList extends React.Component {
         return this.context.beers.map(beer => {
             return <Beer 
                         key = {beer.id}
+                        id = {beer.id}
                         beer_name = {beer.beer_name}
                         quantity = {beer.quantity}
                         description = {beer.beer_description}
