@@ -5,6 +5,7 @@ import AddForm from './AddForm/AddForm';
 import BeerList from './BeerList/BeerList';
 import BeerContext from './BeerContext';
 import NavButtons from './NavButtons/NavButtons';
+import { SERVER_ENDPOINT } from './config';
 
 
 class App extends React.Component {
@@ -32,8 +33,7 @@ class App extends React.Component {
   }
 
   fetchBeers = () => {
-    let url = 'http://localhost:8000/api/beers';
-    fetch(url)
+    fetch(SERVER_ENDPOINT)
       .then(res => res.json())
       .then(data => {
         this.setState({

@@ -38,8 +38,6 @@ class AddForm extends React.Component {
           return res.json()
         })
         .then(data => {
-          console.log('all data', data);
-          console.log('beers', data.response.beers.items);
           this.setState({
             searchedBeers: data.response.beers.items,
           });

@@ -2,14 +2,15 @@
     max-width: 400px;
     border: 1px black solid;
     border-radius: 10px;
-    margin-bottom: 50px;
+    margin-bottom: 25px;
+    margin-top: 25px;
     text-align: center;
     margin-left: auto;
     margin-right: auto;
     background-color: wheat;
 }
 
-.beer-container > * {
+.beer-name, .beer-name, .beer-rating, .beer-description, .info-flex {
     background-color: wheat;
 }
 
@@ -29,4 +30,10 @@
     border-radius: 20px;
     background-color: white;
     margin-bottom: 30px;
+}
+
+#remove-button:hover {
+    cursor: pointer;
+    background-color: black;
+    color: white;
 }

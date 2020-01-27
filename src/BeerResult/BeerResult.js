@@ -1,6 +1,6 @@
 import React from 'react';
 import './BeerResult.css';
-import { REACT_APP_CLIENT_ID, REACT_APP_CLIENT_SECRET } from '../config';
+import { REACT_APP_CLIENT_ID, REACT_APP_CLIENT_SECRET, SERVER_ENDPOINT } from '../config';
 import BeerContext from '../BeerContext';
 
 class BeerResult extends React.Component {
@@ -17,7 +17,6 @@ class BeerResult extends React.Component {
                 return res.json()
             })
             .then(data => {
-                //console.log(data.response.beer);
                 let beer = data.response.beer;
                 let newBeer = {
                     untappd_beer_id: beer.bid,
@@ -28,12 +27,10 @@ class BeerResult extends React.Component {
                     brewery_name: beer.brewery.brewery_name,
                     beer_image: beer.beer_label
                 }
-                //console.log(JSON.stringify(newBeer));
                 return newBeer;
             })
             .then(beerToSend => {
-                console.log('beer to send', JSON.stringify(beerToSend))
-                fetch('http://localhost:8000/api/beers', {
+                fetch(SERVER_ENDPOINT, {
                     method: 'post',
                     headers: { 'Content-Type': 'Application/JSON' },
                     body: JSON.stringify(beerToSend)
@@ -45,7 +42,6 @@ class BeerResult extends React.Component {
                         return res.json()
                     })
                     .then(data => {
-                        console.log('returned data from server', data)
                         this.context.fetchBeers();
                         this.props.history.push('/beer-list');
                     })
@@ -55,14 +51,13 @@ class BeerResult extends React.Component {
     }
 
     render() {
-        console.log(this.context);
         return (
             <div className='beer-result'>
                 <h3 className="beer-name">{this.props.beer_name}</h3>
                 <img src={this.props.beer_label} alt={this.props.beer_name}/>
                 <p>{this.props.bid}</p>
                 <p>{this.props.beer_description}</p>
-                <button onClick={this.handleAdd}>Add this beer</button>
+                <button onClick={this.handleAdd} id="add-button">Add this beer</button>
             </div>
         )
     }

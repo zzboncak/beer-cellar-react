@@ -24,9 +24,10 @@ class BeerList extends React.Component {
         const beers = this.renderBeers();
         return (
             <div className="beer-list">
+                <h2 className="beers-list-header">My beers:</h2>
                 {beers}
-                <Link to='/'>
-                    <button className="back-button">Go back!</button>
+                <Link to='/' className="button-container">
+                    <button className="back-button" id="back-button">Go back!</button>
                 </Link>
             </div>
         );

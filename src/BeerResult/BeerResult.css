@@ -9,6 +9,20 @@
     background-color: wheat;
 }
 
+.beer-result > * {
+    background-color: wheat;
+}
+
+#add-button {
+    background-color: white;
+}
+
+#add-button:hover {
+    color: white;
+    background-color: black;
+    cursor: pointer;
+}
+
 .beer-name {
     text-align: center;
 }

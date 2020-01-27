@@ -1,4 +1,15 @@
-.back-button {
+#back-button {
     height: 50px;
     border-radius: 20px;
+}
+
+.button-container {
+    display: block;
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.beers-list-header {
+    text-align: center;
 }
